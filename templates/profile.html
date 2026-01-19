@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+    {% block title %}
+        <title>profile</title>
+    {% endblock %}
+
+    {% block body %}
+        <div>
+            <h1>{{ session.pseudo }}</h1>
+            <a class="btn btn-sm btn-warning me-1" >modifier</a>
+        </div>
+        <div>
+            <h2>{{ session.email }}</h2>
+            <a class="btn btn-sm btn-warning me-1" >modifier</a>
+        </div>
+        <div>
+            <h2>Mots de passe</h2>
+            <a class="btn btn-sm btn-warning me-1" >modifier</a>
+        </div>
+    {% endblock %}

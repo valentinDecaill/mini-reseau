@@ -98,6 +98,7 @@ def valid_connexion():
     if user and check_password_hash(user['password_hash'], password):
         session['user_id'] = user['id']
         session['pseudo'] = user['pseudo']
+        session['email'] = user['email']
         flash('Connexion réussie !', 'success')
         return redirect('/')  # Redirection vers l'accueil
     else:
@@ -107,7 +108,30 @@ def valid_connexion():
 
 
 #########################################################
+##################deconnexion############################
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None) # Supprime l'id utilisateur de la session
+    session.pop('pseudo', None)  # Supprime le pseudo de la session
+    session.pop('email', None) # Supprime l'email de la session
+    flash('Vous êtes déconnecté.', 'success')
+    return redirect('/')
 
+#########################################################
+##################message################################
+
+
+
+
+#########################################################
+##################profil modification####################
+
+@app.route('/profile', methods=['GET'])
+def show_profil():
+    return render_template('profile.html')
+
+
+#########################################################
 
 if __name__ == '__main__':
     app.run(debug=True)

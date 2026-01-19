@@ -9,15 +9,21 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/#">1</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/#">2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/#">3</a>
-            </li>
-        </ul>
+            {% if session.get('pseudo') %}
+                <li class="nav-item">
+                    <span class="nav-link">Bonjour <strong><a href="/profile">{{ session.pseudo }}</a></strong></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-danger" href="/logout">Se déconnecter</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/inscription">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/connexion">Connexion</a>
+                </li>
+            {% endif %}
+</ul>
     </div>
 </nav>

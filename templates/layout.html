@@ -24,9 +24,15 @@
             {% endwith %}
 
             {% block body %}
-                <h1>Bienvenue !</h1>
-                <a class="btn btn-sm btn-warning me-1" href="/inscription">Inscription</a>
-                <a class="btn btn-sm btn-warning me-1" href="/connexion">Connexion</a>
+
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" id="message" name="message" value="{{ message }}">
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary me-3">Envoyer</button>
+                </div>
+
             {% endblock %}
         </div>
     </body>
