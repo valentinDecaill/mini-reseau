@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+    {% block title %}
+        <title>inscription</title>
+    {% endblock %}
+
+    {% block body %}
+        <h1>Inscription</h1>
+
+        <form method="post" action="/inscription/valider">
+
+            <div class="col-md-6 mb-3">
+                <label for="pseudo" class="form-label">pseudo :</label>
+                <input type="text" class="form-control" id="pseudo" name="pseudo" value="{{ pseudo }}">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">email :</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ email }}">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="password" class="form-label">mots de passe :</label>
+                <input type="password" class="form-control" id="password" name="password" value="{{ password }}">
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn btn-primary me-3">Valider</button>
+                <a href="/" class="btn btn-secondary">Annuler</a>
+            </div>
+
+            <div class="alert alert-success" role="alert">
+                <h>Deja un compte ?</h>
+                <a class="btn btn-sm btn-warning me-1" href="/connexion">Connectez-vous</a>
+            </div>
+
+        </form>
+
+{% endblock %}
