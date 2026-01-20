@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding:utf-8 -*-
 import pymysql.cursors
-from flask import Flask, render_template, g, request, redirect, flash, session
+from flask import Flask, render_template, g, request, redirect, flash, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -159,8 +159,33 @@ def envoyer_message():
     db.commit()
     cursor.close()
 
-    flash("Message publié !", "success")
     return redirect('/')  # On recharge la page d'accueil
+
+#########################################################
+
+@app.route('/api/messages')
+def api_messages():
+    # curseur insertion BDD
+    db = get_db()
+    cursor = db.cursor()
+
+    # On récupère les messages dans la BDD
+    sql = """
+          SELECT message.contenu, message.date_envoi, utilisateur.pseudo
+          FROM message
+                   JOIN utilisateur ON message.user_id = utilisateur.id
+          ORDER BY message.date_envoi DESC \
+          """
+    cursor.execute(sql)
+    messages = cursor.fetchall()
+    cursor.close()
+
+    # On doit les convertir en texte pour éviter une erreur avec JS.
+    for msg in messages:
+        msg['date_envoi'] = msg['date_envoi'].strftime('%Y-%m-%d %H:%M:%S')
+
+    # On renvoie la liste en format JSON pour JS
+    return jsonify(messages)
 
 
 #########################################################
@@ -286,7 +311,7 @@ def valid_mdp_email():
 
     # Vérifier si le mdp n'est pas vide
     if not mdp1 or not mdp2:
-        flash('Le mot de pass ne peut pas être vide', 'danger')
+        flash('Le mot de passe ne peut pas être vide', 'danger')
         return redirect('/modif_mdp')
 
     # Vérification si le nouveau mdp est différents de l'ancien → modifier ou non le mdp
@@ -296,13 +321,13 @@ def valid_mdp_email():
             cursor.execute("update utilisateur set password_hash = %s where id = %s", (nouveau_mdp, id_user))
             db.commit()
             session['password_hash'] = nouveau_mdp
-            flash('Le mot de pass a été modifier avec succès ', 'success')
+            flash('Le mot de passe a été modifier avec succès ', 'success')
             return redirect('/profile')
         else:
-            flash('Le mot de pass est le meme que celui actuel', 'danger')
+            flash('Le mot de passe est le meme que celui actuel', 'danger')
             return redirect('/modif_mdp')
     else:
-        flash('Les deux mot de pass sont différents', 'danger')
+        flash('Les deux mots de passe sont différents', 'danger')
         return redirect('/modif_mdp')
 
 

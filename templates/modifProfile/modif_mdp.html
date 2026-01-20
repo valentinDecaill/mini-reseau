@@ -1,17 +1,17 @@
 {% extends 'layout.html' %}
 
     {% block title %}
-        <title>modification du mot de pass</title>
+        <title>modification du mot de passe</title>
     {% endblock %}
 
     {% block body %}
         <form method="post" action="/modif_mdp/valider">
             <div class="col-md-6 mb-3">
-                <label for="mdp1" class="form-label">entrez votre nouveau mot de pass :</label>
+                <label for="mdp1" class="form-label">entrez votre nouveau mot de passe :</label>
                 <input  type="password" class="form-control" id="mdp" name="mdp1" required>
             </div>
             <div class="col-md-6 mb-3">
-                <label for="mdp2" class="form-label">Confirmez votre nouveau mot de pass :</label>
+                <label for="mdp2" class="form-label">Confirmez votre nouveau mot de passe :</label>
                 <input  type="password" class="form-control" id="mdp" name="mdp2" required>
             </div>
             <button type="submit" class="btn btn-primary me-3">Valider</button>
