@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Administration Gestion Messages</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-4">Gestion des messages</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>pseudo</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in utilisateur %}
+                <tr>
+                    <td>{{ user.pseudo }}</td>
+                    <td>
+                        <form action="/Bannissement/{{ user.id }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment ban cette personne ?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Ban</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <a href="/pageAdmin" class="btn btn-secondary">Retour</a>
+    </div>
+{% endblock %}

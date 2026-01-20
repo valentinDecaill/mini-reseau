@@ -12,7 +12,7 @@
     <body>
 
         {% if session.get('permission') == 2 %}
-            {% include('navAdmin.html') %}
+            {% include('AdminTemplates/navAdmin.html') %}
         {% else %}
             {% include('nav.html') %}
         {% endif %}

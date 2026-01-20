@@ -74,6 +74,15 @@ def valid_inscription():
     db = get_db()
     cursor = db.cursor()
 
+    # Vérification si on n'utilise pas un mail ou un pseudo qui a fait sujet d'un ban
+    sql_ban = "SELECT * FROM ban WHERE pseudo = %s OR email = %s"
+    cursor.execute(sql_ban, (pseudo, email))
+    est_banni = cursor.fetchone()
+
+    if est_banni:
+        flash("Ce pseudo ou cet email est banni. Inscription impossible.", "danger")
+        return redirect('/inscription')
+
     # On cherche s'il existe déja le pseudo ou l'email dans la BDD
     sql_verif = "SELECT * FROM utilisateur WHERE pseudo = %s OR email = %s"
     cursor.execute(sql_verif, (pseudo, email))
@@ -336,9 +345,136 @@ def valid_mdp_email():
 #########################################################
 ################## Page Admin ############################
 
-@app.route('/pageadmin', methods=['GET'])
+
+@app.route('/pageAdmin', methods=['GET'])
+def page_admin():
+    return render_template('AdminTemplates/PageAdmin.html')
+
+
+#########################################################
+################Supression message#######################
+@app.route('/pageAdminMessage', methods=['GET'])
 def pageadmin():
-    return render_template('pageadmin.html')
+    # Vérification que c'est bien un compte admin
+    if session.get('permission') != 2:
+        flash("Accès interdit", "danger")
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # On récupère les messages avec l'ID pour pouvoir les supprimer
+    sql = """
+          SELECT message.id, message.contenu, message.date_envoi, utilisateur.pseudo
+          FROM message
+                   JOIN utilisateur ON message.user_id = utilisateur.id
+          ORDER BY message.date_envoi DESC
+          """
+    cursor.execute(sql)
+    messages = cursor.fetchall()
+    cursor.close()
+
+    return render_template('AdminTemplates/PageAdminMessage.html', messages=messages)
+
+@app.route('/delete_message/<int:id_message>', methods=['POST'])
+def delete_message(id_message):
+    # Vérification que le compte est admin
+    if session.get('permission') != 2:
+        flash("Vous n'avez pas les droits pour faire ça !", "danger")
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # Suppression du message
+    cursor.execute("DELETE FROM message WHERE id = %s", (id_message,))
+    db.commit()
+    cursor.close()
+
+    flash('Message supprimé avec succès.', 'success')
+    return redirect('/pageAdminMessage')
+
+
+#########################################################
+####################bannissement de compte###############
+
+
+@app.route('/pageAdminBan', methods=['GET'])
+def pageadminban():
+    # Vérification que c'est bien un compte admin
+    if session.get('permission') != 2:
+        flash("Accès interdit", "danger")
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # On récupère les messages avec l'ID pour pouvoir les supprimer
+    sql = """
+          SELECT utilisateur.id, utilisateur.pseudo
+          FROM utilisateur
+          """
+    cursor.execute(sql)
+    utilisateur = cursor.fetchall()
+    cursor.close()
+
+    return render_template('AdminTemplates/PageAdminBan.html', utilisateur=utilisateur)
+
+@app.route('/Bannissement/<int:id_user>', methods=['POST'])
+def Bannissement(id_user):
+    # Vérification que c'est bien un compte admin
+    if session.get('permission') != 2:
+        flash("Accès interdit", "danger")
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # On récupère le pseudo et l'email de l'utilisateur banni avant de le supprimer de la BDD
+    sql_recup = "SELECT pseudo, email FROM utilisateur WHERE id = %s"
+    cursor.execute(sql_recup, (id_user,))
+    user = cursor.fetchone()
+
+    if user:
+        # On ajoute ces infos dans la table Ban
+        sql_ban = "INSERT INTO ban (pseudo, email) VALUES (%s, %s)"
+        cursor.execute(sql_ban, (user['pseudo'], user['email']))
+
+        # On supprime l'utilisateur (ses messages partiront aussi tout seuls grace au FOREIGN KEY (user_id) REFERENCES utilisateur(id) ON DELETE CASCADE dans la BDD)
+        sql_delete = "DELETE FROM utilisateur WHERE id = %s"
+        cursor.execute(sql_delete, (id_user,))
+
+        db.commit()
+        flash('Utilisateur banni avec succès.', 'success')
+    else:
+        flash('Impossible de trouver cet utilisateur.', 'danger')
+
+    cursor.close()
+    return redirect('/pageAdminBan')
+
+#########################################################
+####################Gestion bannissement#################
+
+@app.route('/pageAdminGestionBan', methods=['GET'])
+def pageadmingestionban():
+    # Vérification que c'est bien un compte admin
+    if session.get('permission') != 2:
+        flash("Accès interdit", "danger")
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # On récupère les infos de ban avec l'ID pour pouvoir les supprimer
+    sql = """
+          SELECT Ban.id, Ban.pseudo, Ban.email, Ban.date_ban
+          FROM Ban
+          """
+    cursor.execute(sql)
+    Ban = cursor.fetchall()
+    cursor.close()
+
+    return render_template('AdminTemplates/PageAdminGestionBan.html', Ban=Ban)
 
 
 #########################################################

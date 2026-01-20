@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Administration Gestion Bannissement</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-4">Gestion des Bannissement</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>pseudo</th>
+                    <th>email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Ban in Ban %}
+                <tr>
+                    <td>{{ Ban.date_ban }}</td>
+                    <td><strong>{{ Ban.pseudo }}</strong></td>
+                    <td>{{ Ban.email }}</td>
+                    <td>
+                        <form action="//{{ Ban.id }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce Bannissement ?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <a href="/pageAdmin" class="btn btn-secondary">Retour</a>
+    </div>
+{% endblock %}

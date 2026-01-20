@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Administration Gestion Messages</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-4">Gestion des messages</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Auteur</th>
+                    <th>Message</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for msg in messages %}
+                <tr>
+                    <td>{{ msg.date_envoi }}</td>
+                    <td><strong>{{ msg.pseudo }}</strong></td>
+                    <td>{{ msg.contenu }}</td>
+                    <td>
+                        <form action="/delete_message/{{ msg.id }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce message ?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <a href="/pageAdmin" class="btn btn-secondary">Retour</a>
+    </div>
+{% endblock %}

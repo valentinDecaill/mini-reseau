@@ -17,4 +17,9 @@
             <h2>Mot de passe</h2>
             <a class="btn btn-sm btn-warning me-1" href="/modif_mdp">modifier</a>
         </div>
+        {% if session.get('permission') == 2 %}
+            <a href="/pageAdmin" class="btn btn-secondary">Retour</a>
+        {% else %}
+            <a href="/" class="btn btn-secondary">Retour</a>
+        {% endif %}
     {% endblock %}
