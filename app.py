@@ -492,6 +492,8 @@ def pageadmingestionbansupr(id_Ban):
     sql_delete = "DELETE FROM Ban WHERE id = %s"
     cursor.execute(sql_delete, (id_Ban,))
 
+    db.commit()
+
     cursor.close()
     return redirect('/pageAdminGestionBan')
 
