@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78c4b6d8-4d7e-4acd-8fcf-b12c650aa19d" name="Changes" comment="avancement des modif du profile">
+    <list default="true" id="78c4b6d8-4d7e-4acd-8fcf-b12c650aa19d" name="Changes" comment="commencement du systeme de message">
+      <changelist_data name="Valentin Decailloz" email="valentin.decailloz@edu.umlp.fr" automatic="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connexion.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/inscription.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/modifProfile/modif_mail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modifProfile/modif_mail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/modifProfile/modif_mdp.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modifProfile/modif_mdp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/modifProfile/modif_pseudo.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modifProfile/modif_pseudo.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +23,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Valentin Decailloz &lt;valentin.decailloz@edu.umlp.fr&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -165,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768902403526</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="commencement du systeme de message">
+      <option name="closed" value="true" />
+      <created>1768908636597</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1768908636597</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,6 +194,7 @@
     <MESSAGE value="test" />
     <MESSAGE value="ajout profile.html" />
     <MESSAGE value="avancement des modif du profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="avancement des modif du profile" />
+    <MESSAGE value="commencement du systeme de message" />
+    <option name="LAST_COMMIT_MESSAGE" value="commencement du systeme de message" />
   </component>
 </project>
