@@ -4,18 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78c4b6d8-4d7e-4acd-8fcf-b12c650aa19d" name="Changes" comment="systeme de message fini">
-      <change afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdmin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminBan.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminGestionBan.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminMessage.html" afterDir="false" />
+    <list default="true" id="78c4b6d8-4d7e-4acd-8fcf-b12c650aa19d" name="Changes" comment="systeme de bannissement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Project.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/PageAdmin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/AdminTemplates/PageAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdmin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminBan.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminBan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminGestionBan.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminGestionBan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminMessage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/AdminTemplates/PageAdminMessage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/modifProfile/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modifProfile/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/navAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/AdminTemplates/navAdmin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +85,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\val\PycharmProjects\mini-reseau\templates\AdminTemplates" />
       <recent name="C:\Users\val\PycharmProjects\mini-reseau\templates\modifProfile" />
       <recent name="C:\Users\val\PycharmProjects\mini-reseau\static\js" />
       <recent name="C:\Users\val\PycharmProjects\mini-reseau\static\css" />
@@ -206,7 +203,23 @@
       <option name="project" value="LOCAL" />
       <updated>1768924481170</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="systeme de bannissement">
+      <option name="closed" value="true" />
+      <created>1768931222767</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1768931222767</updated>
+    </task>
+    <task id="LOCAL-00011" summary="systeme de bannissement">
+      <option name="closed" value="true" />
+      <created>1768931278698</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1768931278698</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,6 +242,7 @@
     <MESSAGE value="avancement des modif du profile" />
     <MESSAGE value="commencement du systeme de message" />
     <MESSAGE value="systeme de message fini" />
-    <option name="LAST_COMMIT_MESSAGE" value="systeme de message fini" />
+    <MESSAGE value="systeme de bannissement" />
+    <option name="LAST_COMMIT_MESSAGE" value="systeme de bannissement" />
   </component>
 </project>

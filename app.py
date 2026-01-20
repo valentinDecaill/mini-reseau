@@ -477,6 +477,25 @@ def pageadmingestionban():
     return render_template('AdminTemplates/PageAdminGestionBan.html', Ban=Ban)
 
 
+
+@app.route('/pageAdminGestionBanSupr/<int:id_Ban>', methods=['POST'])
+def pageadmingestionbansupr(id_Ban):
+    # Vérification que c'est bien un compte admin
+    if session.get('permission') != 2:
+        flash("Accès interdit", "danger")
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # On supprime l'utilisateur (ses messages partiront aussi tout seuls grace au FOREIGN KEY (user_id) REFERENCES utilisateur(id) ON DELETE CASCADE dans la BDD)
+    sql_delete = "DELETE FROM Ban WHERE id = %s"
+    cursor.execute(sql_delete, (id_Ban,))
+
+    cursor.close()
+    return redirect('/pageAdminGestionBan')
+
+
 #########################################################
 
 if __name__ == '__main__':
