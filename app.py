@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = 'une cle(token) : grain de sel(any random string)'
 
-######################CONNECTION################################
+######################CONNECTION BDD################################
 
 def get_db():
     if 'db' not in g:
@@ -99,6 +99,7 @@ def valid_connexion():
         session['user_id'] = user['id']
         session['pseudo'] = user['pseudo']
         session['email'] = user['email']
+        session['password_hash'] = user['password_hash']
         flash('Connexion réussie !', 'success')
         return redirect('/')  # Redirection vers l'accueil
     else:
@@ -114,6 +115,7 @@ def logout():
     session.pop('user_id', None) # Supprime l'id utilisateur de la session
     session.pop('pseudo', None)  # Supprime le pseudo de la session
     session.pop('email', None) # Supprime l'email de la session
+    session.pop('password_hash', None)  # Supprime le mdp hasher
     flash('Vous êtes déconnecté.', 'success')
     return redirect('/')
 
@@ -130,7 +132,10 @@ def logout():
 def show_profil():
     return render_template('modifProfile/profile.html')
 
+
 #########################################################
+
+
 @app.route('/modif_pseudo', methods=['GET'])
 def show_modif_pseudo():
     id_user = session['user_id']
@@ -143,11 +148,32 @@ def show_modif_pseudo():
 
 @app.route('/modif_pseudo/valider', methods=['POST'])
 def valid_modif_pseudo():
+    # Récupérer l'ID et du pseudo de l'utilisateur connecté
     id_user = session['user_id']
-    cursor = get_db().cursor()
+    pseudo = session['pseudo']
 
+    # Récupérer le nouveau pseudo depuis la page web
+    nouveau_pseudo = request.form.get('pseudo')
 
+    # Connexion à la base
+    db = get_db()
+    cursor = db.cursor()
 
+    # Vérifier si le pseudo n'est pas vide
+    if not nouveau_pseudo:
+        flash('Le pseudo ne peut pas être vide', 'danger')
+        return redirect('/modif_pseudo')
+
+    # Vérification si le nouveau pseudo est différents de l'ancien → modifier ou non le pseudo
+    if nouveau_pseudo != pseudo:
+        cursor.execute("update utilisateur set pseudo = %s where id = %s", (nouveau_pseudo, id_user))
+        db.commit()
+        session['pseudo'] = nouveau_pseudo
+        flash('pseudo modifier avec succès', 'success')
+        return redirect('/profile')
+    else:
+        flash('le pseudo est le meme que celui actuel', 'danger' )
+        return redirect('/modif_pseudo')
 
 
 
@@ -168,8 +194,32 @@ def show_modif_email():
 
 @app.route('/modif_email/valider', methods=['POST'])
 def valid_modif_email():
+    # Récupérer l'ID et de l'email de l'utilisateur connecté
     id_user = session['user_id']
-    cursor = get_db().cursor()
+    email = session['email']
+
+    # Récupérer le nouvel email depuis la page web
+    nouvel_email = request.form.get('email')
+
+    # Connexion à la base
+    db = get_db()
+    cursor = db.cursor()
+
+    # Vérifier si l'email n'est pas vide
+    if not nouvel_email:
+        flash('L\'email ne peut pas être vide', 'danger')
+        return redirect('/modif_email')
+
+    # Vérification si le nouvel email est différents de l'ancien → modifier ou non l'email
+    if nouvel_email != email:
+        cursor.execute("update utilisateur set email = %s where id = %s", (nouvel_email, id_user))
+        db.commit()
+        session['email'] = nouvel_email
+        flash('L\'email est modifier avec succès', 'success')
+        return redirect('/profile')
+    else:
+        flash('L\'email est le meme que celui actuel', 'danger')
+        return redirect('/modif_email')
 
 
 
@@ -180,6 +230,42 @@ def valid_modif_email():
 @app.route('/modif_mdp', methods=['GET'])
 def show_modif_mdp():
     return render_template('modifProfile/modif_mdp.html')
+
+
+@app.route('/modif_mdp/valider', methods=['POST'])
+def valid_mdp_email():
+    # Récupérer l'ID de l'utilisateur connecté
+    id_user = session['user_id']
+    mdp_hash = session['password_hash']
+
+    # Récupérer les deux mdp entrer mdp1 + mdp2
+    mdp1 = request.form.get('mdp1')
+    mdp2 = request.form.get('mdp2')
+
+    # Connexion à la base
+    db = get_db()
+    cursor = db.cursor()
+
+    # Vérifier si le mdp n'est pas vide
+    if not mdp1 or not mdp2:
+        flash('Le mot de pass ne peut pas être vide', 'danger')
+        return redirect('/modif_mdp')
+
+    # Vérification si le nouveau mdp est différents de l'ancien → modifier ou non le mdp
+    if mdp1 == mdp2:
+        nouveau_mdp = generate_password_hash(mdp1)
+        if nouveau_mdp != mdp_hash:
+            cursor.execute("update utilisateur set password_hash = %s where id = %s", (nouveau_mdp, id_user))
+            db.commit()
+            session['password_hash'] = nouveau_mdp
+            flash('Le mot de pass a été modifier avec succès ', 'success')
+            return redirect('/profile')
+        else:
+            flash('Le mot de pass est le meme que celui actuel', 'danger')
+            return redirect('/modif_mdp')
+    else:
+        flash('Les deux mot de pass sont différents', 'danger')
+        return redirect('/modif_mdp')
 
 
 #########################################################
