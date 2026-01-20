@@ -28,11 +28,26 @@ def teardown_db(exception):
     if db is not None:
         db.close()
 
-###########################################################
+################################################################
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def show_layout():
-    return render_template('layout.html')
+    # Connexion BDD
+    db = get_db()
+    cursor = db.cursor()
+
+    # Requête SQL avec jointure pour récupérer le pseudo de l'auteur du message
+    sql = """
+          SELECT message.contenu, message.date_envoi, utilisateur.pseudo
+          FROM message
+                   JOIN utilisateur ON message.user_id = utilisateur.id
+          ORDER BY message.date_envoi DESC \
+          """
+    cursor.execute(sql)
+    messages_recuperes = cursor.fetchall()
+    cursor.close()
+
+    return render_template('layout.html', messages=messages_recuperes)
 
 
 ###########################################################
@@ -122,7 +137,30 @@ def logout():
 #########################################################
 ##################message################################
 
+@app.route('/envoyer_message', methods=['POST'])
+def envoyer_message():
+    # Vérification si l'utilisateur est connecté
+    if 'user_id' not in session:
+        flash("Vous devez être connecté pour parler !", "danger")
+        return redirect('/connexion')
 
+    # Récupération des données
+    contenu = request.form.get('message')
+    id_user = session['user_id']
+
+    # 3. Vérification si le message est vide
+    if not contenu or contenu.strip() == "":
+        return redirect('/')  # On ne fait rien si c'est vide
+
+    # Insertion dans la BDD
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO message (user_id, contenu) VALUES (%s, %s)", (id_user, contenu))
+    db.commit()
+    cursor.close()
+
+    flash("Message publié !", "success")
+    return redirect('/')  # On recharge la page d'accueil
 
 
 #########################################################

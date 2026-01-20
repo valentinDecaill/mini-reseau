@@ -25,12 +25,39 @@
 
             {% block body %}
 
-                <div class="col-md-6 mb-3">
-                    <input type="text" class="form-control" id="message" name="message" value="{{ message }}">
-                </div>
+                {% if session.get('user_id') %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form method="POST" action="/envoyer_message">
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Quoi de neuf ?</label>
+                                    <input type="text" class="form-control" id="message" name="message" placeholder="Écrivez quelque chose..." required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Publier</button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <a href="/connexion">Connectez-vous</a> pour participer à la discussion !
+                    </div>
+                {% endif %}
 
-                <div>
-                    <button type="submit" class="btn btn-primary me-3">Envoyer</button>
+
+                <div class="liste-messages">
+                    {% for msg in messages %}
+                        <div class="card mb-2">
+                            <div class="card-header d-flex justify-content-between">
+                                <strong>{{ msg.pseudo }}</strong>
+                                <small class="text-muted">{{ msg.date_envoi }}</small>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ msg.contenu }}</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="text-center text-muted">Aucun message pour l'instant. Soyez le premier !</p>
+                    {% endfor %}
                 </div>
 
             {% endblock %}
