@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="PY-252.25557.178">
+    <data-source name="social@localhost" uuid="3809ca03-000e-4918-8a35-1908ff132d5e">
+      <database-info product="MariaDB" version="11.4.9-MariaDB" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.5.7" dbms="MARIADB" exact-version="11.4.9" exact-driver-version="3.5">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>valou</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+  </component>
+</project>
