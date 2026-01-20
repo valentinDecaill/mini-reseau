@@ -144,7 +144,6 @@ def show_modif_pseudo():
 @app.route('/modif_pseudo/valider', methods=['POST'])
 def valid_modif_pseudo():
     id_user = session['user_id']
-    pseudo = request.form.get('pseudo')
     cursor = get_db().cursor()
 
 
@@ -167,6 +166,10 @@ def show_modif_email():
 
 
 
+@app.route('/modif_email/valider', methods=['POST'])
+def valid_modif_email():
+    id_user = session['user_id']
+    cursor = get_db().cursor()
 
 
 

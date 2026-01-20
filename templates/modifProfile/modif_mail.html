@@ -7,8 +7,8 @@
     {% block body %}
         <form method="post" action="/modif_email/valider">
             <div class="col-md-6 mb-3">
-                <label for="pseudo" class="form-label">email :</label>
-                <input  type="text" class="form-control" id="pseudo" name="pseudo" value="{{ email }}">
+                <label for="email" class="form-label">entrez votre nouvel email :</label>
+                <input  type="text" class="form-control" id="email" name="email" value="{{ email }}">
             </div>
             <button type="submit" class="btn btn-primary me-3">Valider</button>
             <a class="btn btn-sm btn-warning me-1" href="/profile">retour</a>
