@@ -114,6 +114,7 @@ def valid_connexion():
         session['user_id'] = user['id']
         session['pseudo'] = user['pseudo']
         session['email'] = user['email']
+        session['permission'] = user['permission_id']
         session['password_hash'] = user['password_hash']
         flash('Connexion réussie !', 'success')
         return redirect('/')  # Redirection vers l'accueil
@@ -131,8 +132,9 @@ def logout():
     session.pop('pseudo', None)  # Supprime le pseudo de la session
     session.pop('email', None) # Supprime l'email de la session
     session.pop('password_hash', None)  # Supprime le mdp hasher
+    session.pop('permission', 1) # Supprime les perm
     flash('Vous êtes déconnecté.', 'success')
-    return redirect('/')
+    return redirect('/connexion')
 
 #########################################################
 ##################message################################
@@ -329,6 +331,14 @@ def valid_mdp_email():
     else:
         flash('Les deux mots de passe sont différents', 'danger')
         return redirect('/modif_mdp')
+
+
+#########################################################
+################## Page Admin ############################
+
+@app.route('/pageadmin', methods=['GET'])
+def pageadmin():
+    return render_template('pageadmin.html')
 
 
 #########################################################
