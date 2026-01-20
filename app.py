@@ -128,7 +128,55 @@ def logout():
 
 @app.route('/profile', methods=['GET'])
 def show_profil():
-    return render_template('profile.html')
+    return render_template('modifProfile/profile.html')
+
+#########################################################
+@app.route('/modif_pseudo', methods=['GET'])
+def show_modif_pseudo():
+    id_user = session['user_id']
+    cursor = get_db().cursor()
+    cursor.execute("SELECT pseudo FROM utilisateur WHERE id = %s", (id_user,))
+    user = cursor.fetchone()
+    pseudo = user['pseudo']
+    cursor.close()
+    return render_template('modifProfile/modif_pseudo.html', pseudo=pseudo)
+
+@app.route('/modif_pseudo/valider', methods=['POST'])
+def valid_modif_pseudo():
+    id_user = session['user_id']
+    pseudo = request.form.get('pseudo')
+    cursor = get_db().cursor()
+
+
+
+
+
+
+#########################################################
+
+
+@app.route('/modif_email', methods=['GET'])
+def show_modif_email():
+    id_user = session['user_id']
+    cursor = get_db().cursor()
+    cursor.execute("SELECT email FROM utilisateur WHERE id = %s", (id_user,))
+    user = cursor.fetchone()
+    email = user['email']
+    cursor.close()
+    return render_template('modifProfile/modif_mail.html', email=email)
+
+
+
+
+
+
+
+
+#########################################################
+
+@app.route('/modif_mdp', methods=['GET'])
+def show_modif_mdp():
+    return render_template('modifProfile/modif_mdp.html')
 
 
 #########################################################

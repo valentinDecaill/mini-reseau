@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+    {% block title %}
+        <title>modification du mot de pass</title>
+    {% endblock %}
+
+    {% block body %}
+        <form method="post" action="/modif_mdp/valider">
+            <div class="col-md-6 mb-3">
+                <label for="pseudo" class="form-label">mot de pass :</label>
+                <input  type="text" class="form-control" id="pseudo" name="pseudo">
+            </div>
+            <button type="submit" class="btn btn-primary me-3">Valider</button>
+            <a class="btn btn-sm btn-warning me-1" href="/profile">retour</a>
+        </form>
+    {% endblock %}
